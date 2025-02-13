@@ -9,10 +9,7 @@ namespace SaleOrderPostingConsole
     {
         static void Main(string[] args)
         {// Set up configuration
-
-
-
-
+            
             Connectivity connectivity = new Connectivity();
             int bu = connectivity.BuId;
             string server = connectivity.Server;
