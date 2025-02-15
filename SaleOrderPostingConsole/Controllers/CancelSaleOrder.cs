@@ -32,7 +32,7 @@ namespace SaleOrderPostingConsole.Controllers
         String ErrMsg;
         String a;
 
-        public async Task<string> loadcancel_data(int bucode)
+        public  string  loadcancel_data(int bucode)
 
         {
 
@@ -43,10 +43,10 @@ namespace SaleOrderPostingConsole.Controllers
                 //string baseAddress = api_dt.Rows[0]["api_server_url"].ToString();
                 string posturl = "api/Order/Cancel_Order?BUID=" + bucode + ""; //lst_dt.Rows[0]["api_post_url"].ToString();
                 var client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(baseAddress + posturl);
-                response.EnsureSuccessStatusCode(); // Ensure request success
+                var response =   client.GetAsync(baseAddress + posturl).Result;
+             
 
-                string jsonString = await response.Content.ReadAsStringAsync();
+                string jsonString =   response.Content.ReadAsStringAsync().Result;
                 List<CancelData> paramList = JsonConvert.DeserializeObject<List<CancelData>>(jsonString);
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //client.Timeout = TimeSpan.FromMinutes(50);

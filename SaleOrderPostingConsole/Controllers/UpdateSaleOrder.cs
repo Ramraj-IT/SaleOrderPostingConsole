@@ -46,7 +46,7 @@ namespace SaleOrderPostingConsole.Controllers
         String a;
 
 
-        public async Task<String> loadupdate_data(int bucode)
+        public  String  loadupdate_data(int bucode)
 
         {
 
@@ -58,10 +58,9 @@ namespace SaleOrderPostingConsole.Controllers
                 string posturl = "api/Order/Edit_Order?BUID=" + bucode + ""; //lst_dt.Rows[0]["api_post_url"].ToString();
                 var client = new HttpClient();
 
-                HttpResponseMessage response = await client.GetAsync(baseAddress + posturl);
-                response.EnsureSuccessStatusCode(); // Ensure request success
-
-                string jsonString = await response.Content.ReadAsStringAsync();
+                var response =   client.GetAsync(baseAddress + posturl).Result;
+                
+                string jsonString =   response.Content.ReadAsStringAsync().Result;
                 List<OrderData> paramList = JsonConvert.DeserializeObject<List<OrderData>>(jsonString);
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //client.Timeout = TimeSpan.FromMinutes(10);

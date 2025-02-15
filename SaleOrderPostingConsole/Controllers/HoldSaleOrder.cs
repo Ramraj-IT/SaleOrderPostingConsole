@@ -32,17 +32,17 @@ namespace SaleOrderPostingConsole.Controllers
         String ErrMsg;
         String a;
 
-        public async Task<string> loadhold_data(int bucode) 
+        public  string  loadhold_data(int bucode) 
         {
             try
             {
                 string baseAddress = con.BaseURL; 
                 string posturl = "api/Order/Hold_Order?BUID=" + bucode + ""; //lst_dt.Rows[0]["api_post_url"].ToString();
                 var client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(baseAddress + posturl);
-                response.EnsureSuccessStatusCode(); // Ensure request success
+                var response =   client.GetAsync(baseAddress + posturl).Result;
+               // Ensure request success
 
-                string jsonString = await response.Content.ReadAsStringAsync();
+                string jsonString =   response.Content.ReadAsStringAsync().Result;
                 List<HoldData> paramList = JsonConvert.DeserializeObject<List<HoldData>>(jsonString);
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

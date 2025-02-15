@@ -52,36 +52,21 @@ namespace SaleOrderPostingConsole.Controllers
         String ErrMsg;
         String a;
 
-        public async Task<String> loadorder_data(int bucode)
+        public  string loadorder_data(int bucode)
         {
 
             try
             {
-                Connectivity connectivity = new Connectivity();
-                Helpers helpers = new Helpers();
+                
                 var client = new HttpClient();
-                string baseAddress = connectivity.BaseURL;
+                string baseAddress = con.BaseURL;
                 string posturl = "api/Order/Post_Order?BUID=" + bucode + "";
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.Timeout = TimeSpan.FromMinutes(10);
+                var response =   client.GetAsync(baseAddress + posturl).Result;
 
-                HttpResponseMessage response = await client.GetAsync(baseAddress + posturl);
-                response.EnsureSuccessStatusCode(); // Ensure request success
-
-                string jsonString = await response.Content.ReadAsStringAsync();
+                
+                string jsonString =   response.Content.ReadAsStringAsync().Result;
                 List<OrderData> paramList = JsonConvert.DeserializeObject<List<OrderData>>(jsonString);
-
-                // string baseAddress = connectivity.BaseURL;
-                // string posturl = "api/Order/Post_Order?BUID=" + bucode + "";
-                // var client = new HttpClient();
-                // client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                // client.Timeout = TimeSpan.FromMinutes(10);
-                // var response = client.GetAsync(baseAddress + posturl).Result;
-                // string jsonString = await response.Content.ReadAsStringAsync(); 
-
-                //var Result = JsonSerializer.Deserialize<ApiResponse>(jsonString, new JsonSerializerOptions { 
-                //     PropertyNameCaseInsensitive = true 
-                // }); 
+ 
 
                 foreach (OrderData res in paramList)
                 {

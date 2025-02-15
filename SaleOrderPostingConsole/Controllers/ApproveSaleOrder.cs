@@ -33,7 +33,7 @@ namespace SaleOrderPostingConsole.Controllers
         String ErrMsg;
         String a;
 
-        public async Task<String> loadconfirm_data(int bucode)
+        public String  loadconfirm_data(int bucode)
         {
 
             try
@@ -42,10 +42,10 @@ namespace SaleOrderPostingConsole.Controllers
                 string baseAddress = con.BaseURL;
                 string posturl = "api/Order/Approve_Order?BUID=" + bucode + "";
                 var client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(baseAddress + posturl);
-                response.EnsureSuccessStatusCode(); // Ensure request success
+                var response =   client.GetAsync(baseAddress + posturl).Result;
+                
 
-                string jsonString = await response.Content.ReadAsStringAsync();
+                string jsonString =   response.Content.ReadAsStringAsync().Result;
                 List<ApproveData> paramList = JsonConvert.DeserializeObject<List<ApproveData>>(jsonString);
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
